@@ -44,18 +44,15 @@ On mobile, right-click = **long-press**. The planet form and sphere generation w
 
 ---
 
-## Self-hosted server (Docker)
+## Self-hosted server
 
-### Prerequisites
+Two install modes — pick the one that fits your setup.
 
-| Tool | Install |
-|------|---------|
-| Docker + Compose | https://docs.docker.com/get-docker/ |
-| uv (Python package manager) | https://docs.astral.sh/uv/getting-started/installation/ |
+### Option A: Docker (new server)
 
----
+Spins up a fresh Bedrock Dedicated Server in Docker.
 
-## Quick start
+**Prerequisites:** Docker + Compose, uv
 
 ```bash
 git clone <repo-url>
@@ -67,31 +64,21 @@ bash install.sh
 1. Install Python dependencies via `uv`
 2. Start the server (downloads the Bedrock image on first run)
 3. Wait for the world to generate
-4. Patch `level.dat` to enable Beta APIs (required for the add-on)
+4. Patch `level.dat` to enable Beta APIs
 5. Restart the server
 
 Connect in Bedrock, accept the resource pack download, and you're in.
 
----
+#### Docker configuration
 
-## Configuration
-
-Create a `.env` file next to `docker-compose.yaml` to override defaults:
+Create a `.env` file to override defaults:
 
 ```dotenv
 LEVEL_NAME=My Solar System   # world/save folder name (default: Minecraft)
 SERVER_IP=192.168.1.50       # IP for macvlan network
 ```
 
-### Network setup
-
-The default config uses a **macvlan** network so the server gets its own LAN IP (useful for Bedrock's UDP discovery). If you don't need this, edit `docker-compose.yaml`:
-
-```yaml
-# Replace the networks block with:
-networks: [default]
-# And remove the ipv4_address line under mc-macvlan
-```
+The default config uses a **macvlan** network so the server gets its own LAN IP. If you don't need this, edit `docker-compose.yaml` and replace the networks block with `networks: [default]`.
 
 To create the macvlan network:
 ```bash
@@ -101,7 +88,32 @@ docker network create -d macvlan \
   -o parent=eth0 \
   mc-macvlan
 ```
-Replace `192.168.X.x` with your LAN subnet and `eth0` with your network interface (`ip link` to check).
+Replace `192.168.X.x` with your LAN subnet and `eth0` with your interface (`ip link` to check).
+
+---
+
+### Option B: Existing BDS
+
+Adds the packs to a Bedrock Dedicated Server you already have running.
+
+**Prerequisites:** uv
+
+```bash
+git clone <repo-url>
+cd minecraft
+bash install.sh --server-dir /path/to/your/bedrock-server
+```
+
+`install.sh` will:
+1. Copy both packs into `behavior_packs/` and `resource_packs/`
+2. Register the packs in your world's pack JSON files (non-destructive — existing packs are preserved)
+3. Patch `level.dat` to enable Beta APIs
+
+Then restart your BDS. Set `LEVEL_NAME` if your world folder isn't named `Minecraft`:
+
+```bash
+LEVEL_NAME="My World" bash install.sh --server-dir /path/to/bedrock-server
+```
 
 ---
 
