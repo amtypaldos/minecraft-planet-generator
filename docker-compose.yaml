@@ -1,0 +1,44 @@
+# ── configuration ─────────────────────────────────────────────────────────────
+# Override any value by creating a .env file next to this file, e.g.:
+#   LEVEL_NAME=My Solar System
+#   SERVER_IP=192.168.1.50
+#
+# Network: this config uses a macvlan network so the server gets its own LAN IP.
+# If you don't need a dedicated IP, replace the networks section with:
+#   networks: [default]
+# and remove the ipv4_address line. See README.md for details.
+
+services:
+  bedrock:
+    image: itzg/minecraft-bedrock-server:latest
+    container_name: bedrock-planets
+    restart: unless-stopped
+
+    networks:
+      mc-macvlan:
+        ipv4_address: ${SERVER_IP:-192.168.2.22}
+
+    volumes:
+      - ./data:/data
+      - ./packs/planet_generator:/data/behavior_packs/planet_generator:ro
+      - ./packs/planet_generator_rp:/data/development_resource_packs/planet_generator_rp:ro
+      - ./packs/world_behavior_packs.json:/data/worlds/${LEVEL_NAME:-Minecraft}/world_behavior_packs.json:ro
+      - ./packs/world_resource_packs.json:/data/worlds/${LEVEL_NAME:-Minecraft}/world_resource_packs.json:ro
+
+    environment:
+      EULA: "TRUE"
+      GAMEMODE: "creative"
+      DIFFICULTY: "peaceful"
+      ALLOW_CHEATS: "true"
+      DEFAULT_PLAYER_PERMISSION_LEVEL: "operator"
+      LEVEL_TYPE: "flat"
+      LEVEL_NAME: "${LEVEL_NAME:-Minecraft}"
+      ONLINE_MODE: "false"
+      TZ: "UTC"
+      ALLOW_LIST: "false"
+      CONTENT_LOG_CONSOLE_OUTPUT_ENABLED: "true"
+      TEXTUREPACK_REQUIRED: "true"
+
+networks:
+  mc-macvlan:
+    external: true
