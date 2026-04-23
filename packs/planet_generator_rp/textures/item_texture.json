@@ -1,0 +1,36 @@
+{
+  "resource_pack_name": "planet_generator_rp",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "space_sun": {
+      "textures": "textures/items/space_sun"
+    },
+    "space_mercury": {
+      "textures": "textures/items/space_mercury"
+    },
+    "space_venus": {
+      "textures": "textures/items/space_venus"
+    },
+    "space_earth": {
+      "textures": "textures/items/space_earth"
+    },
+    "space_mars": {
+      "textures": "textures/items/space_mars"
+    },
+    "space_jupiter": {
+      "textures": "textures/items/space_jupiter"
+    },
+    "space_saturn": {
+      "textures": "textures/items/space_saturn"
+    },
+    "space_uranus": {
+      "textures": "textures/items/space_uranus"
+    },
+    "space_neptune": {
+      "textures": "textures/items/space_neptune"
+    },
+    "space_pluto": {
+      "textures": "textures/items/space_pluto"
+    }
+  }
+}
