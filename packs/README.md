@@ -120,6 +120,8 @@ uv run <script>  # run any script in the venv
 | `add_planet.py` | CLI planet manager / importable library |
 | `gen_planet_textures.py` | Regenerate all original planet icons |
 | `main.py <level.dat>` | Enable Beta APIs experiment in a world's level.dat |
+| `build.py` | Build `planet-generator-x.x.x.mcaddon` for local install |
+| `version.py <major\|minor\|patch\|x.y.z>` | Bump version, commit, and tag for release |
 
 ---
 
