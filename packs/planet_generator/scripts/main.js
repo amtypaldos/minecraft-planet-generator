@@ -15,6 +15,7 @@ const PLANETS = {
   'space:uranus':  { radius: 11, block: 'cyan_wool',       name: 'Uranus' },
   'space:neptune': { radius: 10, block: 'blue_wool',       name: 'Neptune' },
   'space:pluto': { radius: 2, block: 'blue_ice', name: 'Pluto' },
+  'space:haumea': { radius: 3, block: 'gray_wool', name: 'Haumea' },
 };
 
 function* sphereJob(dimension, center, radius, blockId) {

@@ -31,6 +31,9 @@
     },
     "space_pluto": {
       "textures": "textures/items/space_pluto"
+    },
+    "space_haumea": {
+      "textures": "textures/items/space_haumea"
     }
   }
 }
