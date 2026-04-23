@@ -17,7 +17,10 @@ from textual.binding import Binding
 from textual.containers import Horizontal, Vertical
 from textual.screen import ModalScreen
 from textual.widgets import Button, DataTable, Footer, Header, Input, Label, Static
-from textual.worker import work
+try:
+    from textual.worker import work
+except ImportError:
+    from textual._work_decorator import work  # textual >=1.0 / 8.x
 
 from add_planet import add_planet, delete_planet, edit_planet, parse_planets
 
@@ -267,11 +270,11 @@ class PlanetApp(App):
         table = self.query_one(DataTable)
         if table.row_count == 0:
             return None
-        row_key = table.cursor_row_key
-        if row_key is None:
-            return None
+        from textual.coordinate import Coordinate
+        cell_key = table.coordinate_to_cell_key(Coordinate(table.cursor_row, 0))
+        row_key = str(cell_key.row_key.value)
         for p in parse_planets():
-            if p["id"] == str(row_key):
+            if p["id"] == row_key:
                 return p
         return None
 

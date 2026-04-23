@@ -21,7 +21,32 @@ A Bedrock Dedicated Server add-on that lets you place hollow planet spheres in-g
 
 ---
 
-## Prerequisites
+## Local install (mobile / Windows)
+
+No server needed. Download the `.mcaddon` from the [GitHub Releases page](../../releases) and open it directly in Minecraft.
+
+**Windows 10/11:**
+1. Download `planet-generator-x.x.x.mcaddon`
+2. Double-click it — Minecraft opens and imports both packs automatically
+3. Create or open a world → **Edit** → **Resource Packs** → activate Planet Generator RP
+4. **Edit** → **Behavior Packs** → activate Planet Generator BP
+5. **Edit** → **Experiments** → enable **Beta APIs**
+6. Play — planet items appear in the creative inventory under the Items tab
+
+**Mobile (iOS / Android):**
+1. Download `planet-generator-x.x.x.mcaddon`
+2. Tap it and choose **Open with Minecraft** (or use the share sheet → Minecraft)
+3. Follow steps 3–6 above
+
+> **Beta APIs experiment is required.** This is a Minecraft limitation for packs using `@minecraft/server 2.6.0`. On an existing world, enable it under world **Settings → Experiments → Beta APIs**.
+
+On mobile, right-click = **long-press**. The planet form and sphere generation work identically.
+
+---
+
+## Self-hosted server (Docker)
+
+### Prerequisites
 
 | Tool | Install |
 |------|---------|

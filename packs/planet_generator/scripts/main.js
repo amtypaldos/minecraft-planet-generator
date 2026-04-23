@@ -6,7 +6,7 @@ const MAX_RADIUS = 150;
 
 const PLANETS = {
   'space:sun':     { radius: 30, block: 'glowstone',       name: 'Sun' },
-  'space:mercury': { radius: 4,  block: 'gravel',          name: 'Mercury' },
+  'space:mercury': { radius: 4, block: 'gray_wool', name: 'Mercury' },
   'space:venus':   { radius: 7,  block: 'sandstone',       name: 'Venus' },
   'space:earth': { radius: 8, block: 'light_blue_wool', name: 'Earth' },
   'space:mars':    { radius: 6,  block: 'red_sandstone',   name: 'Mars' },
