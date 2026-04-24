@@ -16,6 +16,11 @@ const PLANETS = {
   'space:neptune': { radius: 10, block: 'blue_wool',       name: 'Neptune' },
   'space:pluto': { radius: 2, block: 'blue_ice', name: 'Pluto' },
   'space:haumea': { radius: 3, block: 'gray_wool', name: 'Haumea' },
+  'space:eris': { radius: 3, block: 'white_wool', name: 'Eris' },
+  'space:makemake': { radius: 2, block: 'red_wool', name: 'Makemake' },
+  'space:ceres': { radius: 1, block: 'gray_wool', name: 'Ceres' },
+  'space:sedna': { radius: 2, block: 'red_wool', name: 'Sedna' },
+  'space:quaoar': { radius: 2, block: 'purple_wool', name: 'Quaoar' },
 };
 
 function* sphereJob(dimension, center, radius, blockId) {

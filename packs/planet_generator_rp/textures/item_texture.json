@@ -34,6 +34,21 @@
     },
     "space_haumea": {
       "textures": "textures/items/space_haumea"
+    },
+    "space_eris": {
+      "textures": "textures/items/space_eris"
+    },
+    "space_makemake": {
+      "textures": "textures/items/space_makemake"
+    },
+    "space_ceres": {
+      "textures": "textures/items/space_ceres"
+    },
+    "space_sedna": {
+      "textures": "textures/items/space_sedna"
+    },
+    "space_quaoar": {
+      "textures": "textures/items/space_quaoar"
     }
   }
 }

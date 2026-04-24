@@ -1,0 +1,22 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:item": {
+    "description": {
+      "identifier": "space:sedna",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:display_name": {
+        "value": "Sedna"
+      },
+      "minecraft:icon": {
+        "textures": {
+          "default": "space_sedna"
+        }
+      },
+      "minecraft:max_stack_size": 16
+    }
+  }
+}

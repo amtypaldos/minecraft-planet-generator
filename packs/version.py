@@ -15,6 +15,7 @@ from pathlib import Path
 PACKS = Path(__file__).parent
 BP_MANIFEST = PACKS / "planet_generator" / "manifest.json"
 RP_MANIFEST = PACKS / "planet_generator_rp" / "manifest.json"
+WORLD_BP_JSON = PACKS / "world_behavior_packs.json"
 WORLD_RP_JSON = PACKS / "world_resource_packs.json"
 
 
@@ -76,14 +77,18 @@ def main() -> None:
     write_version(BP_MANIFEST, new)
     write_version(RP_MANIFEST, new)
 
-    # keep world_resource_packs.json in sync
+    # keep world pack JSON files in sync
+    world_bp = json.loads(WORLD_BP_JSON.read_text())
+    world_bp[0]["version"] = new
+    WORLD_BP_JSON.write_text(json.dumps(world_bp, indent=2) + "\n")
+
     world_rp = json.loads(WORLD_RP_JSON.read_text())
     world_rp[0]["version"] = new
     WORLD_RP_JSON.write_text(json.dumps(world_rp) + "\n")
 
     tag = f"v{new_str}"
     run(["git", "-C", str(PACKS.parent), "add",
-         str(BP_MANIFEST), str(RP_MANIFEST), str(WORLD_RP_JSON)])
+         str(BP_MANIFEST), str(RP_MANIFEST), str(WORLD_BP_JSON), str(WORLD_RP_JSON)])
     run(["git", "-C", str(PACKS.parent), "commit", "-m", f"Release {tag}"])
     run(["git", "-C", str(PACKS.parent), "tag", tag])
 
