@@ -3,11 +3,11 @@
   "header": {
     "name": "Planet Generator RP",
     "description": "Item textures for Planet Generator planets",
-    "uuid": "c3d4e5f6-a7b8-9012-cdef-123456789012",
+    "uuid": "d6242f13-8124-4598-9262-d9fbcc646cac",
     "version": [
       1,
       2,
-      1
+      2
     ],
     "min_engine_version": [
       1,
