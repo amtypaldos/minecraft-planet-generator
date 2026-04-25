@@ -103,13 +103,15 @@ if [[ -n "$SERVER_DIR" ]]; then
   echo "✓ planet_generator_rp → $SERVER_DIR/resource_packs/"
   echo ""
 
-  # merge world pack lists
+  # merge world pack lists (read UUIDs + versions from manifests, not hardcoded)
   echo "Enabling packs in world..."
   WORLD_DIR="$SERVER_DIR/worlds/$LEVEL_NAME"
-  merge_pack_json "$WORLD_DIR/world_behavior_packs.json" \
-    "a1b2c3d4-e5f6-7890-abcd-ef1234567890" "1.0.0"
-  merge_pack_json "$WORLD_DIR/world_resource_packs.json" \
-    "c3d4e5f6-a7b8-9012-cdef-123456789012" "1.1.15"
+  BP_UUID=$("$UV" run python3 -c "import json; m=json.load(open('packs/planet_generator/manifest.json')); print(m['header']['uuid'])")
+  BP_VER=$("$UV" run python3 -c "import json; m=json.load(open('packs/planet_generator/manifest.json')); print('.'.join(str(v) for v in m['header']['version']))")
+  RP_UUID=$("$UV" run python3 -c "import json; m=json.load(open('packs/planet_generator_rp/manifest.json')); print(m['header']['uuid'])")
+  RP_VER=$("$UV" run python3 -c "import json; m=json.load(open('packs/planet_generator_rp/manifest.json')); print('.'.join(str(v) for v in m['header']['version']))")
+  merge_pack_json "$WORLD_DIR/world_behavior_packs.json" "$BP_UUID" "$BP_VER"
+  merge_pack_json "$WORLD_DIR/world_resource_packs.json" "$RP_UUID" "$RP_VER"
   echo ""
 
   # patch level.dat

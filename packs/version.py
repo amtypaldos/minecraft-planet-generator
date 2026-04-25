@@ -1,5 +1,9 @@
 """
-Bump the pack version, commit, and tag for release.
+Bump the pack version, rotate UUIDs, commit, and tag for release.
+
+Minecraft Bedrock treats a pack with the same UUID as a duplicate and
+blocks import — rotating the UUID on every release lets users install
+the new version without manually deleting the old one first.
 
 Usage:
     uv run version.py patch        # 1.1.22 → 1.1.23
@@ -10,6 +14,7 @@ Usage:
 import json
 import subprocess
 import sys
+import uuid
 from pathlib import Path
 
 PACKS = Path(__file__).parent
@@ -27,6 +32,38 @@ def write_version(path: Path, version: list[int]) -> None:
     data = json.loads(path.read_text())
     data["header"]["version"] = version
     path.write_text(json.dumps(data, indent=2) + "\n")
+
+
+def rotate_uuids(new_version: list[int]) -> None:
+    new_bp_uuid = str(uuid.uuid4())
+    new_rp_uuid = str(uuid.uuid4())
+
+    bp = json.loads(BP_MANIFEST.read_text())
+    bp["header"]["uuid"] = new_bp_uuid
+    bp["header"]["version"] = new_version
+    # update the RP dependency reference inside the BP
+    for dep in bp.get("dependencies", []):
+        if "uuid" in dep and "module_name" not in dep:
+            dep["uuid"] = new_rp_uuid
+    BP_MANIFEST.write_text(json.dumps(bp, indent=2) + "\n")
+
+    rp = json.loads(RP_MANIFEST.read_text())
+    rp["header"]["uuid"] = new_rp_uuid
+    rp["header"]["version"] = new_version
+    RP_MANIFEST.write_text(json.dumps(rp, indent=2) + "\n")
+
+    world_bp = json.loads(WORLD_BP_JSON.read_text())
+    world_bp[0]["pack_id"] = new_bp_uuid
+    world_bp[0]["version"] = new_version
+    WORLD_BP_JSON.write_text(json.dumps(world_bp, indent=2) + "\n")
+
+    world_rp = json.loads(WORLD_RP_JSON.read_text())
+    world_rp[0]["pack_id"] = new_rp_uuid
+    world_rp[0]["version"] = new_version
+    WORLD_RP_JSON.write_text(json.dumps(world_rp) + "\n")
+
+    print(f"  BP UUID → {new_bp_uuid}")
+    print(f"  RP UUID → {new_rp_uuid}")
 
 
 def run(cmd: list[str]) -> None:
@@ -58,14 +95,13 @@ def main() -> None:
     old_str = ".".join(str(v) for v in current)
     new_str = ".".join(str(v) for v in new)
 
-    # check for uncommitted changes (excluding manifests we're about to edit)
     result = subprocess.run(
         ["git", "status", "--porcelain"],
         capture_output=True, text=True, cwd=PACKS.parent,
     )
     dirty = [
         l for l in result.stdout.splitlines()
-        if not any(m in l for m in ["manifest.json", "world_resource_packs.json"])
+        if not any(m in l for m in ["manifest.json", "world_resource_packs.json", "world_behavior_packs.json"])
     ]
     if dirty:
         print("ERROR: uncommitted changes — commit or stash before versioning:")
@@ -73,18 +109,7 @@ def main() -> None:
         sys.exit(1)
 
     print(f"Bumping version: {old_str} → {new_str}")
-
-    write_version(BP_MANIFEST, new)
-    write_version(RP_MANIFEST, new)
-
-    # keep world pack JSON files in sync
-    world_bp = json.loads(WORLD_BP_JSON.read_text())
-    world_bp[0]["version"] = new
-    WORLD_BP_JSON.write_text(json.dumps(world_bp, indent=2) + "\n")
-
-    world_rp = json.loads(WORLD_RP_JSON.read_text())
-    world_rp[0]["version"] = new
-    WORLD_RP_JSON.write_text(json.dumps(world_rp) + "\n")
+    rotate_uuids(new)
 
     tag = f"v{new_str}"
     run(["git", "-C", str(PACKS.parent), "add",
