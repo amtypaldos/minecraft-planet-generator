@@ -25,22 +25,22 @@ A Bedrock Dedicated Server add-on that lets you place hollow planet spheres in-g
 
 No server needed. Download the `.mcaddon` from the [GitHub Releases page](../../releases) and open it directly in Minecraft.
 
-**Windows 10/11:**
-1. Download `planet-generator-x.x.x.mcaddon`
-2. Double-click it — Minecraft opens and imports both packs automatically
-3. Create or open a world → **Edit** → **Resource Packs** → activate Planet Generator RP
-4. **Edit** → **Behavior Packs** → activate Planet Generator BP
-5. **Edit** → **Experiments** → enable **Beta APIs**
-6. Play — planet items appear in the creative inventory under the Items tab
+**Step 1 — Import the packs**
 
-**Mobile (iOS / Android):**
-1. Download `planet-generator-x.x.x.mcaddon`
-2. Tap it and choose **Open with Minecraft** (or use the share sheet → Minecraft)
-3. Follow steps 3–6 above
+- **Windows:** double-click the `.mcaddon` file — Minecraft opens and imports both packs automatically
+- **Mobile:** tap the `.mcaddon` file and choose **Open with Minecraft** (or share → Minecraft)
 
-> **Beta APIs experiment is required.** This is a Minecraft limitation for packs using `@minecraft/server 2.6.0`. On an existing world, enable it under world **Settings → Experiments → Beta APIs**.
+**Step 2 — Create a new world with Beta APIs enabled**
 
-On mobile, right-click = **long-press**. The planet form and sphere generation work identically.
+> **Important:** Beta APIs must be enabled at world creation — it cannot be toggled on an existing world, especially on mobile.
+
+1. In Minecraft, tap **Create New World**
+2. Go to **Experiments** → enable **Beta APIs**
+3. Go to **Resource Packs** → activate Planet Generator RP
+4. Go to **Behavior Packs** → activate Planet Generator BP
+5. Create the world — planet items appear in the creative inventory under the Items tab
+
+On mobile, long-press while holding a planet item to spawn it.
 
 ---
 
