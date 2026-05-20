@@ -16,7 +16,7 @@ services:
 
     networks:
       mc-macvlan:
-        ipv4_address: ${SERVER_IP:-192.168.2.22}
+        ipv4_address: ${SERVER_IP:-192.168.2.25}
 
     volumes:
       - ./data:/data
